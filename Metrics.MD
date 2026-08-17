@@ -1,43 +1,21 @@
-📊 Observability – Metrics, Monitoring & Prometheus
-
-Notes from Observability Zero to Hero – Day 2
-Topics: Metrics, Monitoring, Prometheus, Grafana, Alertmanager, Exporters
-
-📌 Table of Contents
-Metrics
-Metrics vs Monitoring
-Types of Metrics
-Monitoring Flow
-Prometheus
-Prometheus Architecture
-Time-Series Database
-PromQL
-Service Discovery
-Prometheus Exporters
-Node Exporter
-Kube-State-Metrics
-Application Metrics
-Grafana
-Alertmanager
-Installing Prometheus on Kubernetes
-Key Takeaways
-📈 Metrics
-What are Metrics?
+# 📈 Metrics
+### What are Metrics?
 
 Metrics are historical/periodic measurements of events or system behavior used to understand the health and performance of a system.
 
 Examples:
 
-CPU utilization
-Memory utilization
-Disk utilization
-HTTP request count
-HTTP request latency
-Pod status
-Number of replicas
-Application signups
-User activity
-🔍 Metrics vs Monitoring
+- CPU utilization
+- Memory utilization
+- Disk utilization
+- HTTP request count
+- HTTP request latency
+- Pod status
+- Number of replicas
+- Application signups
+- User activity
+
+### 🔍 Metrics vs Monitoring
 
 This is an important distinction.
 
