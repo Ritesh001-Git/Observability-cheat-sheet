@@ -583,7 +583,7 @@ It can send notifications to Slack, email, PagerDuty, etc.
 
 🎯 Interview Answer
 
-`“Prometheus is responsible for collecting and storing metrics from applications, Kubernetes, and infrastructure. Grafana connects to Prometheus and visualizes those metrics through dashboards and graphs. Prometheus also evaluates alerting rules, and when an alert condition is met, it sends the alert to Alertmanager. Alertmanager is responsible for handling and routing those alerts to notification channels such as Slack or email.”`
+##### “Prometheus is responsible for collecting and storing metrics from applications, Kubernetes, and infrastructure. Grafana connects to Prometheus and visualizes those metrics through dashboards and graphs. Prometheus also evaluates alerting rules, and when an alert condition is met, it sends the alert to Alertmanager. Alertmanager is responsible for handling and routing those alerts to notification channels such as Slack or email.”
 ---
 
 # ⚔️ Prometheus Alternatives
