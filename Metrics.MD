@@ -26,66 +26,73 @@ Example: CPU = 85%	Dashboard showing CPU over time
 Example: HTTP latency = 5s	Alert when latency exceeds a threshold
 Data itself	Metrics + dashboards + alerts
 In simple terms
+```
 Metrics
    ↓
 Monitoring System
    ├── Dashboards
    └── Alerts
+```
 
 Monitoring is a superset of metrics.
 
 A monitoring system can:
 
-Collect/scrape metrics
-Store metrics
-Visualize metrics
-Evaluate metrics
-Trigger alerts
-📊 Types of Metrics
+- Collect/scrape metrics
+- Store metrics
+- Visualize metrics
+- Evaluate metrics
+- Trigger alerts
+
+### 📊 Types of Metrics
 
 Metrics can exist at different levels of a system.
 
-1. Infrastructure Metrics
+#### 1. Infrastructure Metrics
 
 Used to monitor infrastructure such as AWS EC2 instances / Kubernetes nodes.
 
 Examples:
 
-CPU utilization
-Memory utilization
-Disk utilization
-Network-related metrics
-2. Kubernetes Metrics
+- CPU utilization
+- Memory utilization
+- Disk utilization
+- Network-related metrics
+
+#### 2. Kubernetes Metrics
 
 Used to understand the health of the Kubernetes cluster.
 
 Examples:
 
-Pod status
-Pod crashes
-CrashLoopBackOff
-Deployment status
-Number of replicas
-HPA replica count
-Kubernetes events
-3. Application Metrics
+- Pod status
+- Pod crashes
+- CrashLoopBackOff
+- Deployment status
+- Number of replicas
+- HPA replica count
+- Kubernetes events
+
+#### 3. Application Metrics
 
 Used to monitor application behavior.
 
 Examples:
 
-HTTP requests
-HTTP request latency
-Request count
-Error count
-Application-specific business metrics
-User signups
-User deactivations
-User activity
-🔄 Monitoring Flow
+- HTTP requests
+- HTTP request latency
+- Request count
+- Error count
+- Application-specific business metrics
+- User signups
+- User deactivations
+- User activity
+
+### 🔄 Monitoring Flow
 
 Metrics can reach the monitoring system using two mechanisms:
 
+```
 Push
 
 The application/system pushes metrics to the monitoring system.
@@ -104,6 +111,7 @@ Monitoring System
        │ Scrape / Pull
        ▼
      Target
+```
 
 In Prometheus, pull/scrape is the commonly used mechanism.
 
