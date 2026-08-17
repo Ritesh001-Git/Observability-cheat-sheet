@@ -559,6 +559,31 @@ Application ─────────► /metrics endpoint
            Dashboards              Notifications
 ```
 
+### Prometheus + Grafana + Alertmanager — Interview Workflow
+
+How Each Component Works
+#### 1. Application / Infrastructure
+Applications, Kubernetes components, and infrastructure generate metrics such as CPU, memory, HTTP requests, latency, error rate, pod status, etc.
+These metrics are exposed through exporters or application /metrics endpoints.
+
+#### 2. Prometheus — Collect & Store
+Prometheus scrapes/pulls metrics from these targets at regular intervals.
+It stores the collected metrics as time-series data.
+Prometheus is also responsible for querying metrics using PromQL and evaluating alerting rules.
+
+#### 3. Grafana — Visualize
+Grafana connects to Prometheus as a data source.
+It queries Prometheus and converts the metrics into dashboards, graphs, charts, and visualizations.
+Grafana is mainly responsible for observability and visualization, not collecting the metrics.
+
+#### 4. Alertmanager — Handle Notifications
+When a Prometheus alerting rule is triggered, Prometheus sends the alert to Alertmanager.
+Alertmanager handles the alert, such as grouping, routing, and managing notifications.
+It can send notifications to Slack, email, PagerDuty, etc.
+
+🎯 Interview Answer
+
+`“Prometheus is responsible for collecting and storing metrics from applications, Kubernetes, and infrastructure. Grafana connects to Prometheus and visualizes those metrics through dashboards and graphs. Prometheus also evaluates alerting rules, and when an alert condition is met, it sends the alert to Alertmanager. Alertmanager is responsible for handling and routing those alerts to notification channels such as Slack or email.”`
 ---
 
 # ⚔️ Prometheus Alternatives
@@ -570,3 +595,4 @@ Some alternatives/competitors mentioned include:
 - Graphite
 
 Prometheus is especially popular in Kubernetes environments because of its strong Kubernetes/CNCF ecosystem integration.
+
