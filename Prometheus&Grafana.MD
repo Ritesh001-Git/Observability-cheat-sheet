@@ -308,3 +308,265 @@ Application metrics can include:
 - Business-specific metrics
 
 Prometheus can use **Service Discovery** to find applications and scrape their `/metrics` endpoints.
+
+
+# 📊 Grafana
+
+**Grafana** is primarily used for **visualizing metrics**.
+
+Prometheus + Grafana are commonly used together as a monitoring stack.
+
+```text
+Prometheus
+    │
+    │ Metrics
+    ▼
+ Grafana
+    │
+    ├── Graphs
+    ├── Dashboards
+    └── Visualizations
+```
+
+### Why Grafana?
+
+Raw metrics can be difficult to understand.
+
+Grafana converts metrics into:
+
+- Graphs
+- Charts
+- Dashboards
+- Panels
+- Time-based visualizations
+
+This makes system health easier to understand.
+
+---
+
+# 🚨 Alerting
+
+Monitoring isn't only about visualization.
+
+You can define rules such as:
+
+```text
+IF CPU > 80%
+THEN trigger alert
+```
+
+Another example:
+
+```text
+IF HTTP latency > 10 seconds
+multiple times
+THEN notify development team
+```
+
+Alert flow:
+
+```text
+Metric
+  ↓
+Prometheus
+  ↓
+Alert Rule
+  ↓
+Alertmanager
+  ↓
+Notification
+```
+
+Possible notification destinations include:
+
+- Slack
+- Email
+- Other notification systems
+
+---
+
+# ☸️ Installing Prometheus on Kubernetes
+
+Prometheus can be installed on Kubernetes using **Helm**.
+
+The example environment uses:
+
+- AWS EKS
+- Kubernetes
+- Helm
+- Prometheus
+- Grafana
+- Alertmanager
+
+### Basic installation flow
+
+```text
+1. Create Kubernetes cluster
+2. Configure required AWS/Kubernetes integration
+3. Install/configure Helm
+4. Add Prometheus Helm repository
+5. Create monitoring namespace
+6. Install Prometheus stack
+7. Verify pods
+8. Access Prometheus/Grafana/Alertmanager
+```
+
+---
+
+## 📦 Monitoring Namespace
+
+A dedicated namespace can be created for monitoring components:
+
+```bash
+kubectl create namespace monitoring
+```
+
+Prometheus and Grafana can then be installed into the `monitoring` namespace.
+
+---
+
+# 🔐 EKS + OIDC
+
+When running Prometheus-related workloads in AWS EKS, an **OIDC provider** can be associated with the cluster.
+
+This allows Kubernetes service accounts to interact with AWS IAM roles/policies through **IAM Roles for Service Accounts (IRSA)**.
+
+Conceptually:
+
+```text
+Kubernetes Service Account
+          │
+          ▼
+      OIDC Provider
+          │
+          ▼
+       IAM Role
+          │
+          ▼
+     AWS Services
+```
+
+---
+
+# 🌐 Accessing Prometheus Locally
+
+For learning/testing, Kubernetes **port forwarding** can be used instead of exposing services through Ingress.
+
+Example pattern:
+
+```bash
+kubectl port-forward ...
+```
+
+This allows access to services such as:
+
+- Prometheus UI
+- Grafana
+- Alertmanager
+
+For production environments, an **Ingress + Ingress Controller** can be used instead of temporary port forwarding.
+
+---
+
+# 🔗 Prometheus + Grafana Integration
+
+Grafana can use Prometheus as a **data source**.
+
+High-level flow:
+
+```text
+Prometheus
+    │
+    │ Metrics
+    ▼
+ Grafana
+    │
+    ▼
+Dashboards
+```
+
+To integrate them:
+
+1. Open Grafana
+2. Add a new data source
+3. Select Prometheus
+4. Provide the Prometheus URL
+5. Save/test the connection
+6. Build or use dashboards
+
+---
+
+# 🧠 Three Primary Metric Sources
+
+For a Kubernetes-based environment, remember these three important sources:
+
+| Source | Metrics |
+|---|---|
+| **Node Exporter** | Infrastructure/node metrics |
+| **Kube-State-Metrics** | Kubernetes resource/state metrics |
+| **Application `/metrics`** | Application-specific metrics |
+
+### Easy way to remember
+
+```text
+Node Exporter
+     ↓
+Infrastructure
+
+Kube-State-Metrics
+     ↓
+Kubernetes
+
+/metrics
+     ↓
+Application
+```
+
+Prometheus scrapes metrics from all of these sources.
+
+---
+
+# 🔄 Complete Monitoring Flow
+
+```text
+                  ┌───────────────────────┐
+                  │      AWS / Nodes      │
+                  └───────────┬───────────┘
+                              │
+                              ▼
+                       Node Exporter
+                              │
+                              │
+Kubernetes API ──────► Kube-State-Metrics
+                              │
+                              │
+Application ─────────► /metrics endpoint
+                              │
+                              ▼
+                    ┌──────────────────┐
+                    │    Prometheus    │
+                    │                  │
+                    │ Scrape           │
+                    │ Store            │
+                    │ Query            │
+                    └───────┬──────────┘
+                            │
+                ┌───────────┴───────────┐
+                ▼                       ▼
+             Grafana              Alertmanager
+                │                       │
+                ▼                       ▼
+           Dashboards              Notifications
+```
+
+---
+
+# ⚔️ Prometheus Alternatives
+
+Some alternatives/competitors mentioned include:
+
+- Nagios
+- InfluxDB
+- Graphite
+
+Prometheus is especially popular in Kubernetes environments because of its strong Kubernetes/CNCF ecosystem integration.
