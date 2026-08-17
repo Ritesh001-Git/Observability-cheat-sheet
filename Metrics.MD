@@ -17,14 +17,14 @@ Examples:
 
 ### 🔍 Metrics vs Monitoring
 
-This is an important distinction.
+| Metrics | Monitoring |
+|---|---|
+| Raw measurements/data | System/process that uses the data |
+| Represents historical information | Collects, visualizes, and evaluates metrics |
+| Example: CPU = 85% | Dashboard showing CPU usage over time |
+| Example: HTTP latency = 5s | Alert when latency exceeds a threshold |
+| Data itself | Metrics + dashboards + alerts |
 
-Metrics	Monitoring
-Raw measurements/data	System/process that uses the data
-Represents historical information	Collects, visualizes and evaluates metrics
-Example: CPU = 85%	Dashboard showing CPU over time
-Example: HTTP latency = 5s	Alert when latency exceeds a threshold
-Data itself	Metrics + dashboards + alerts
 In simple terms
 ```
 Metrics
