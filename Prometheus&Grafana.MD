@@ -385,46 +385,6 @@ Possible notification destinations include:
 
 ---
 
-# ☸️ Installing Prometheus on Kubernetes
-
-Prometheus can be installed on Kubernetes using **Helm**.
-
-The example environment uses:
-
-- AWS EKS
-- Kubernetes
-- Helm
-- Prometheus
-- Grafana
-- Alertmanager
-
-### Basic installation flow
-
-```text
-1. Create Kubernetes cluster
-2. Configure required AWS/Kubernetes integration
-3. Install/configure Helm
-4. Add Prometheus Helm repository
-5. Create monitoring namespace
-6. Install Prometheus stack
-7. Verify pods
-8. Access Prometheus/Grafana/Alertmanager
-```
-
----
-
-## 📦 Monitoring Namespace
-
-A dedicated namespace can be created for monitoring components:
-
-```bash
-kubectl create namespace monitoring
-```
-
-Prometheus and Grafana can then be installed into the `monitoring` namespace.
-
----
-
 # 🔐 EKS + OIDC
 
 When running Prometheus-related workloads in AWS EKS, an **OIDC provider** can be associated with the cluster.
@@ -452,21 +412,7 @@ Kubernetes Service Account
 
 For learning/testing, Kubernetes **port forwarding** can be used instead of exposing services through Ingress.
 
-Example pattern:
-
-```bash
-kubectl port-forward ...
-```
-
-This allows access to services such as:
-
-- Prometheus UI
-- Grafana
-- Alertmanager
-
-For production environments, an **Ingress + Ingress Controller** can be used instead of temporary port forwarding.
-
----
+Exampl
 
 # 🔗 Prometheus + Grafana Integration
 
@@ -526,8 +472,9 @@ Prometheus scrapes metrics from all of these sources.
 
 ---
 
-# 🔄 Complete Monitoring Flow
+# Prometheus + Grafana + Alertmanager — Interview Quick Reference
 
+## 🔄 Overall Workflow
 ```text
                   ┌───────────────────────┐
                   │      AWS / Nodes      │
@@ -543,48 +490,83 @@ Kubernetes API ──────► Kube-State-Metrics
 Application ─────────► /metrics endpoint
                               │
                               ▼
-                    ┌──────────────────┐
-                    │    Prometheus    │
-                    │                  │
-                    │ Scrape           │
-                    │ Store            │
-                    │ Query            │
-                    └───────┬──────────┘
-                            │
-                ┌───────────┴───────────┐
-                ▼                       ▼
-             Grafana              Alertmanager
-                │                       │
-                ▼                       ▼
-           Dashboards              Notifications
+┌─────────────────────────────────────────────────────┐
+│                     Prometheus                      │
+│                                                     │
+│  Scrape → Store → Query → Evaluate Alert Rules     │
+└───────────────┬─────────────────────┬───────────────┘
+                │                     │
+                │ PromQL              │ Alert
+                ▼                     ▼
+        ┌───────────────┐      ┌───────────────┐
+        │    Grafana    │      │ Alertmanager  │
+        │               │      │               │
+        │ Dashboards    │      │ Group         │
+        │ Graphs        │      │ Deduplicate   │
+        │ Panels        │      │ Route         │
+        └───────────────┘      │ Notify        │
+                               └───────┬───────┘
+                                       │
+                                       ▼
+                                Slack / Email /
+                                PagerDuty etc.
 ```
-
-### Prometheus + Grafana + Alertmanager — Interview Workflow
-
-How Each Component Works
-#### 1. Application / Infrastructure
-Applications, Kubernetes components, and infrastructure generate metrics such as CPU, memory, HTTP requests, latency, error rate, pod status, etc.
-These metrics are exposed through exporters or application /metrics endpoints.
-
-#### 2. Prometheus — Collect & Store
-Prometheus scrapes/pulls metrics from these targets at regular intervals.
-It stores the collected metrics as time-series data.
-Prometheus is also responsible for querying metrics using PromQL and evaluating alerting rules.
-
-#### 3. Grafana — Visualize
-Grafana connects to Prometheus as a data source.
-It queries Prometheus and converts the metrics into dashboards, graphs, charts, and visualizations.
-Grafana is mainly responsible for observability and visualization, not collecting the metrics.
-
-#### 4. Alertmanager — Handle Notifications
-When a Prometheus alerting rule is triggered, Prometheus sends the alert to Alertmanager.
-Alertmanager handles the alert, such as grouping, routing, and managing notifications.
-It can send notifications to Slack, email, PagerDuty, etc.
-
-🎯 Interview Answer
-
-##### “Prometheus is responsible for collecting and storing metrics from applications, Kubernetes, and infrastructure. Grafana connects to Prometheus and visualizes those metrics through dashboards and graphs. Prometheus also evaluates alerting rules, and when an alert condition is met, it sends the alert to Alertmanager. Alertmanager is responsible for handling and routing those alerts to notification channels such as Slack or email.”
 ---
+
+## 📊 Where Metrics Come From
+
+### Kubernetes
+* **`kube-state-metrics`**
+  * Exposes Kubernetes API objects (Pods, Deployments, Nodes, etc.)
+* **`node-exporter`**
+  * Exposes Node/VM metrics (CPU, Memory, Disk, Network)
+
+### Applications
+* **`/metrics` endpoint**
+  * Exposes Application metrics (Requests, Errors, Latency, etc.)
+
+> **Note:** `node_exporter` is commonly used for Linux hosts/VMs, including AWS EC2 instances. `kube-state-metrics` exposes Kubernetes object/state metrics; it does not collect node CPU/memory usage itself.
+
+---
+
+## 🧩 Component Functions
+
+| Component | Function |
+| :--- | :--- |
+| **Application `/metrics`** | Exposes application metrics |
+| **`node_exporter`** | Exposes Linux host metrics like CPU, memory, disk, and network |
+| **`kube-state-metrics`** | Exposes Kubernetes object/state metrics from the Kubernetes API |
+| **Prometheus** | Scrapes and stores metrics |
+| **Time-Series Database (TSDB)** | Prometheus stores metrics as **time-series data**. |
+| **PromQL** | Queries and calculates metrics |
+| **Alert Rules** | Define conditions for alerts |
+| **Alertmanager** | Groups, deduplicates, silences, routes, and sends alerts |
+| **Grafana** | Visualizes metrics |
+| **Grafana Dashboard** | Displays metrics using panels, graphs, gauges, etc. |
+
+---
+
+## 📌 Short Workflow
+
+1. Application exposes `/metrics`.
+2. `node_exporter` exposes host/VM metrics.
+3. `kube-state-metrics` exposes Kubernetes state metrics.
+4. Prometheus scrapes these metric endpoints.
+5. Prometheus stores metrics as time-series data.
+6. Prometheus evaluates alert rules.
+7. Triggered alerts go to Alertmanager.
+8. Alertmanager routes notifications to Slack, Email, PagerDuty, etc.
+9. Grafana connects to Prometheus as a data source.
+10. Grafana uses PromQL to query Prometheus.
+11. Grafana displays the results in dashboards.
+
+---
+
+## 🎯 Interview Answer
+
+> "Applications expose metrics through `/metrics`, while `node_exporter` provides host metrics and `kube-state-metrics` provides Kubernetes object-state metrics. Prometheus scrapes and stores these metrics and uses PromQL for querying and alert rules for detecting problems. When an alert fires, Prometheus sends it to Alertmanager, which manages and routes the notification. Grafana connects to Prometheus and visualizes the metrics using dashboards and panels."
+
+```
 
 # ⚔️ Prometheus Alternatives
 
