@@ -1,0 +1,14 @@
+groups:
+
+  - name: test-alerts
+
+    rules:
+
+      - alert: PrometheusTargetDown
+        expr: up == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Prometheus target is down"
+          description: "Target {{ $labels.instance }} has been down for more than 30 seconds."
