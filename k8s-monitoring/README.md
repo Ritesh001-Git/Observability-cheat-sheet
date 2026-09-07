@@ -31,6 +31,9 @@ prometheus           ClusterIP   10.96.201.4     <none>        9090/TCP         
 
 Since kube-state-metrics is exposed as a ClusterIP service, it can be accessed from inside the Kubernetes cluster.
 
-- Enter the Kind Control Plane - `docker exec -it kind-control-plane bash`
+- Enter the Kind Control Plane
+  -  For Kind - `docker exec -it kind-control-plane bash`
+  -  For Minikube - `minikube shh`
+  -  For EKS, AKS, GKS, Kind, Minikube use Temporary debug pod - `kubectl run curl-test --image=curlimages curl -it --rm --restart=Never -- sh`
 
 - Access Kube State Metrics - `curl 10.96.166.73:8080/metrics`
