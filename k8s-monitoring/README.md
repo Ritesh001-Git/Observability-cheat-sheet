@@ -37,3 +37,39 @@ Since kube-state-metrics is exposed as a ClusterIP service, it can be accessed f
   -  For EKS, AKS, GKS, Kind, Minikube use Temporary debug pod - `kubectl run curl-test --image=curlimages curl -it --rm --restart=Never -- sh`
 
 - Access Kube State Metrics - `curl 10.96.166.73:8080/metrics`
+- Access a specific Kube State Metrics - curl localhost:8080/metrics | grep kube_pod_container_status_restarts_total
+
+#### Where different metrics come from
+
+```
+Kubernetes Cluster
+       │
+       ├── kube-state-metrics
+       │      │
+       │      ├── Pod Status
+       │      ├── Container Status
+       │      ├── Restart Count ⭐
+       │      └── Deployment Status
+       │
+       ├── kubelet / cAdvisor
+       │      │
+       │      ├── CPU Usage
+       │      ├── Memory Usage
+       │      └── Container Resource Usage
+       │
+       └── Node Exporter
+              │
+              ├── Node CPU
+              ├── Node Memory
+              └── Disk Usage
+```
+
+### To create and observe a crashing pod:
+
+- **Create a crashing pod:** `kubectl run busybox-crash --image=busybox -- /bin/sh -c "exit 1"`
+- **Verify its status:** `kubectl get pod busybox-crash` (You'll observe a `STATUS` of `Error` and increasing `RESTARTS`).
+- **Port forward for Prometheus:** `kubectl port-forward -n monitoring svc/prometheus 9090:9090`
+- **Query Prometheus:** Use `kube_pod_container_status_restarts_total` to track restarts.
+- **Visualize:** Check the graph for visualization.
+
+### How Everything is Working
