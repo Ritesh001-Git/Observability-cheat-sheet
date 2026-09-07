@@ -37,7 +37,7 @@ Since kube-state-metrics is exposed as a ClusterIP service, it can be accessed f
   -  For EKS, AKS, GKS, Kind, Minikube use Temporary debug pod - `kubectl run curl-test --image=curlimages curl -it --rm --restart=Never -- sh`
 
 - Access Kube State Metrics - `curl 10.96.166.73:8080/metrics`
-- Access a specific Kube State Metrics - curl localhost:8080/metrics | grep kube_pod_container_status_restarts_total
+- Access a specific Kube State Metrics - `curl localhost:8080/metrics | grep kube_pod_container_status_restarts_total`
 
 #### Where different metrics come from
 
@@ -73,3 +73,4 @@ Kubernetes Cluster
 - **Visualize:** Check the graph for visualization.
 
 ### How Everything is Working
+<img width="1536" height="1024" alt="ChatGPT Image Sep 7, 2026, 03_47_25 PM" src="https://github.com/user-attachments/assets/3cab0e69-4823-4f11-8211-278c5d7998bd" />
