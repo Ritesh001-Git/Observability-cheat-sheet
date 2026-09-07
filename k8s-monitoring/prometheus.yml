@@ -20,26 +20,34 @@ data:
 
     scrape_configs:
 
+      # Prometheus itself
       - job_name: prometheus
         static_configs:
           - targets:
               - localhost:9090
 
+      # Discover Kubernetes Pods
       - job_name: kubernetes-pods
         kubernetes_sd_configs:
           - role: pod
 
         relabel_configs:
 
-          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+          # Only scrape pods with annotation:
+          # prometheus.io/scrape: "true"
+          - source_labels:
+              - __meta_kubernetes_pod_annotation_prometheus_io_scrape
             action: keep
             regex: "true"
 
-          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+          # Use custom metrics path if specified
+          - source_labels:
+              - __meta_kubernetes_pod_annotation_prometheus_io_path
             action: replace
             target_label: __metrics_path__
             regex: (.+)
 
+          # Use custom metrics port if specified
           - source_labels:
               - __address__
               - __meta_kubernetes_pod_annotation_prometheus_io_port
@@ -48,12 +56,16 @@ data:
             replacement: $1:$2
             target_label: __address__
 
+      # Kubernetes State Metrics
+      - job_name: kube-state-metrics
+        static_configs:
+          - targets:
+              - kube-state-metrics.monitoring.svc.cluster.local:8080
+
   alerts.yml: |
     groups:
       - name: kubernetes-test
-
         rules:
-
           - alert: TestPodDown
             expr: up{job="kubernetes-pods"} == 0
             for: 30s
@@ -62,6 +74,7 @@ data:
             annotations:
               summary: "Test pod is down"
               description: "The Kubernetes test pod is not responding."
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -70,38 +83,49 @@ metadata:
   namespace: monitoring
 spec:
   replicas: 1
+
   selector:
     matchLabels:
       app: prometheus
+
   template:
     metadata:
       labels:
         app: prometheus
+
     spec:
       containers:
         - name: prometheus
           image: prom/prometheus:latest
+
           args:
             - "--config.file=/etc/prometheus/prometheus.yml"
             - "--storage.tsdb.path=/prometheus"
+
           ports:
             - containerPort: 9090
+
           volumeMounts:
             - name: config
               mountPath: /etc/prometheus
+
       volumes:
         - name: config
           configMap:
             name: prometheus-config
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: prometheus
   namespace: monitoring
+
 spec:
   selector:
     app: prometheus
+
   ports:
     - port: 9090
       targetPort: 9090
+      protocol: TCP
