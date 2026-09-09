@@ -38,7 +38,7 @@ Tracing shows how it is happening.
 
 | Category       | Monitoring                                   | Observability                                         |
 |----------------|----------------------------------------------|------------------------------------------------------|
-| Focus          | Checking if everything is working as expected| Understanding why things are happening in the system  |
+| Focus          | Checking whether the system is working as expected| Understanding what is happening inside the system and why  |
 | Data           | Collects metrics like CPU usage, memory usage, and error rates | Collects logs, metrics, and traces to provide a full picture |
 | Alerts         | Sends notifications when something goes wrong| Correlates events and anomalies to identify root causes |
 | Example        | If a server's CPU usage goes above 90%, monitoring will alert us | If a website is slow, observability helps us trace the user's request through different services to find the bottleneck |
