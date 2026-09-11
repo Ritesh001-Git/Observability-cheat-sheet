@@ -21,4 +21,4 @@
 - **Kibana**: A visualization tool that allows users to explore and analyze logs stored in Elasticsearch.
 
 # 🏠 Architecture
-<img width="831" height="1080" alt="architecture" src="https://github.com/user-attachments/assets/f4d16c1e-3009-46b7-9ea8-3adb6140d2f2" />
+<img width="1000" height="800" alt="architecture" src="https://github.com/user-attachments/assets/f4d16c1e-3009-46b7-9ea8-3adb6140d2f2" />
