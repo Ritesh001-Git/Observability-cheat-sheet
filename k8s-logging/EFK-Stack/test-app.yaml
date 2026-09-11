@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: log-generator
+  namespace: default
+
+spec:
+
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: log-generator
+
+  template:
+
+    metadata:
+      labels:
+        app: log-generator
+
+    spec:
+
+      containers:
+
+        - name: log-generator
+
+          image: busybox
+
+          command:
+
+            - /bin/sh
+
+            - -c
+
+            - |
+              while true
+              do
+                echo "Application is running"
+                echo "INFO: User login successful"
+                echo "ERROR: Sample application error"
+                sleep 5
+              done
