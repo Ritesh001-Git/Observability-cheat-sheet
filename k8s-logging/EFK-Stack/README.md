@@ -10,6 +10,10 @@ Fluent Bit is a lightweight log collector and processor. It collects logs from K
 ### Kibana
 Kibana is a visualization and monitoring tool that connects to Elasticsearch. It provides a web interface to search, analyze, and visualize logs using dashboards and charts.
 
+## Architecture 
+
+<img width="2569" height="2047" alt="EFS" src="https://github.com/user-attachments/assets/3039c944-0912-4be8-98ee-0aef06a96737" />
+
 ## Workflow
 ```
 Kubernetes Pods
