@@ -1,6 +1,15 @@
 # EFK Stack (Elasticsearch, Fluentbit, Kibana)
 The EFK Stack is used for collecting, storing, and visualizing logs from applications running in Kubernetes.
 
+### Elasticsearch
+Elasticsearch is a distributed search and analytics engine that stores and indexes logs. It allows logs to be searched and retrieved quickly.
+
+### Fluent Bit
+Fluent Bit is a lightweight log collector and processor. It collects logs from Kubernetes containers, processes them, adds useful metadata, and sends them to Elasticsearch.
+
+### Kibana
+Kibana is a visualization and monitoring tool that connects to Elasticsearch. It provides a web interface to search, analyze, and visualize logs using dashboards and charts.
+
 ## Workflow
 ```
 Kubernetes Pods
