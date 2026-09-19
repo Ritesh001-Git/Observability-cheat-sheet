@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log-generator
+  namespace: default
+
+spec:
+
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: log-generator
+
+  template:
+
+    metadata:
+      labels:
+        app: log-generator
+
+    spec:
+
+      containers:
+
+        - name: log-generator
+
+          image: busybox
+
+          command:
+            - /bin/sh
+            - -c
+            - |
+              i=0
+              while true
+              do
+                i=$((i+1))
+
+                echo "INFO: Application request $i successful"
+
+                if [ $((i % 3)) -eq 0 ]; then
+                  echo "WARN: Application latency is high"
+                fi
+
+                if [ $((i % 5)) -eq 0 ]; then
+                  echo "ERROR: Database connection failed"
+                fi
+
+                sleep 5
+              done
