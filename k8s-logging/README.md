@@ -22,3 +22,25 @@
 
 # 🏠 Architecture
 <img width="1000" height="800" alt="architecture" src="https://github.com/user-attachments/assets/f4d16c1e-3009-46b7-9ea8-3adb6140d2f2" />
+
+## ELK vs EFK Stack
+
+| Feature | ELK Stack | EFK Stack |
+|---|---|---|
+| **Full Form** | Elasticsearch, Logstash, Kibana | Elasticsearch, Fluent Bit, Kibana |
+| **Log Collector** | Filebeat | Fluent Bit |
+| **Log Processor** | Logstash | Fluent Bit |
+| **Log Storage & Search** | Elasticsearch | Elasticsearch |
+| **Log Visualization** | Kibana | Kibana |
+| **Log Collection Agent** | **Filebeat** | **Fluent Bit** |
+| **Log Processing** | Mainly handled by **Logstash** | Handled by **Fluent Bit** |
+| **Architecture** | Kubernetes → Filebeat → Logstash → Elasticsearch → Kibana | Kubernetes → Fluent Bit → Elasticsearch → Kibana |
+| **Runs on Kubernetes** | Filebeat usually runs as a **DaemonSet**; Logstash usually runs as a Deployment | Fluent Bit usually runs as a **DaemonSet** |
+| **Log Parsing** | Filebeat can perform basic parsing; Logstash provides advanced parsing and transformation | Fluent Bit provides parsing, filtering, transformation, and enrichment |
+| **Kubernetes Metadata** | Filebeat can add Kubernetes metadata | Fluent Bit can add Kubernetes metadata |
+| **Log Transformation** | Primarily performed by Logstash | Performed by Fluent Bit |
+| **Configuration Complexity** | Generally higher because Filebeat and Logstash are separate components | Generally simpler because Fluent Bit can collect and process logs in one component |
+| **Resource Usage** | Typically higher because both Filebeat and Logstash are involved | Typically lower due to Fluent Bit's lightweight design |
+| **Scalability** | Filebeat can scale across nodes and Logstash can be scaled separately | Fluent Bit can run on each node and forward logs directly to Elasticsearch |
+| **Best Suited For** | Pipelines requiring advanced log processing and transformation | Lightweight Kubernetes logging and efficient log collection |
+| **Typical Data Flow** | `Pods → Filebeat → Logstash → Elasticsearch → Kibana` | `Pods → Fluent Bit → Elasticsearch → Kibana` |
