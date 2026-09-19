@@ -524,13 +524,3 @@ Kibana
      ▼
 User / Developer
 ```
-
-### In Simple Terms
-
--   **Kubernetes** → Generates application logs.
--   **Fluent Bit** → Collects and processes logs from Kubernetes nodes.
--   **Elasticsearch** → Stores and indexes the logs.
--   **Kibana** → Searches and visualizes the logs.
-
-This forms a complete centralized logging pipeline for applications
-running in Kubernetes.
