@@ -44,3 +44,61 @@
 | **Scalability** | Filebeat can scale across nodes and Logstash can be scaled separately | Fluent Bit can run on each node and forward logs directly to Elasticsearch |
 | **Best Suited For** | Pipelines requiring advanced log processing and transformation | Lightweight Kubernetes logging and efficient log collection |
 | **Typical Data Flow** | `Pods → Filebeat → Logstash → Elasticsearch → Kibana` | `Pods → Fluent Bit → Elasticsearch → Kibana` |
+
+```
+ELK with Filebeat
+
+In the ELK stack, Filebeat is commonly used as the log shipper/collector:
+
+Kubernetes Pods
+       │
+       ▼
+Container Log Files
+       │
+       ▼
+   Filebeat
+       │
+       │ Collects Logs
+       │ Adds Metadata
+       ▼
+   Logstash
+       │
+       │ Parse / Filter / Transform
+       ▼
+ Elasticsearch
+       │
+       ▼
+    Kibana
+
+So, the roles are:
+
+Filebeat      → Collects and ships logs
+Logstash      → Processes and transforms logs
+Elasticsearch → Stores and indexes logs
+Kibana        → Searches and visualizes logs
+EFK
+
+In EFK, Fluent Bit generally performs the collection and processing:
+
+Kubernetes Pods
+       │
+       ▼
+Container Log Files
+       │
+       ▼
+  Fluent Bit
+       │
+       │ Collect + Process
+       │ Add Metadata
+       ▼
+ Elasticsearch
+       │
+       ▼
+    Kibana
+
+So:
+
+Fluent Bit    → Collects + Processes logs
+Elasticsearch → Stores + Indexes logs
+Kibana        → Searches + Visualizes logs
+```
