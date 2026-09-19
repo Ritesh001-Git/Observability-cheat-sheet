@@ -12,6 +12,10 @@ The stack consists of:
 -   **Filebeat** -- Lightweight log shipper that collects logs from
     Kubernetes nodes and sends them to Logstash.
 
+## Architecture 
+
+<img width="1400" height="788" alt="GmxK8pNyBKLHoiTGYGbjHu0dFv_Lawo0sGuUONLJexP04Ud6Z-RaZ6C6BkBXM34S1KaGPB4kNBwAPFqNxrbRBImaWrF_J7GmDnY5xfBpFo7K3VfDiHHeSfpneRPDTWK4A3S7bNGUFRDY0ONnQcU2y_QPn8qi5YWGJ7cONSVlPoHE843iVdKDjOXmeQ-3yCH0" src="https://github.com/user-attachments/assets/f09eda9d-4b17-42cf-977f-3c1513189e0b" />
+
 ## Components
 
 ### Elasticsearch
