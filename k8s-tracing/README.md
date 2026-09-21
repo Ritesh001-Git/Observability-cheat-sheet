@@ -79,3 +79,8 @@ Modern versions of Jaeger natively support OpenTelemetry data via OTLP (OpenTele
 | **Data Signals** | Traces, metrics, logs, and profiling | Traces exclusively |
 | **User Interface** | None (relies on backends) | Includes a rich Web UI |
 | **Vendor Agnostic** | Yes (exports to many tools) | Yes (open-source backend) |
+
+## Architecture
+
+<img width="1536" height="1024" alt="ChatGPT Image Sep 21, 2026, 03_30_47 PM" src="https://github.com/user-attachments/assets/16361a0a-811f-4949-820f-e8010ca0c983" />
+
