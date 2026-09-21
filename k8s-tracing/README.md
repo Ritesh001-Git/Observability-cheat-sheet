@@ -1,3 +1,30 @@
+# Distributed Tracing with Jaeger, FastAPI & Kind
+
+## 1. What is Distributed Tracing?
+
+Distributed tracing is used to track a request as it moves through an application and its services.
+
+A **trace** represents the complete request, while a **span** represents an individual operation within that trace.
+
+Example:
+
+```text
+FastAPI Request
+      |
+      +-- GET /users
+             |
+             +-- get-users
+                    |
+                    +-- database-query
+```
+
+Tracing helps identify:
+
+- Where a request spends time
+- Which operation is slow
+- Where an error occurred
+- How different services interact
+
 ## 🕵️‍♂️ What is Jaeger?
 - Jaeger is an open-source, end-to-end distributed tracing system used for monitoring and troubleshooting microservices-based architectures. It helps developers understand how requests flow through a complex system, by tracing the path a request takes and measuring how long each step in that path takes.
 
