@@ -16,3 +16,10 @@
 - 🏷️ **Tags**: Tags are key-value pairs that provide additional context about a span. For example, a tag might indicate the HTTP method used (GET, POST) or the status code returned.
 - 📝 **Logs**: Logs in a span provide details about what’s happening during that operation. They can capture events like errors or important checkpoints.
 - 🔗 **Context Propagation**: For Jaeger to trace requests across services, it needs to propagate context. This means each service in the call chain passes along the trace information to the next service.
+
+## Components of Jaeger
+- Jaeger consists of several components:
+- Agent: Collects traces from your application.
+- Collector: Receives traces from the agent and processes them.
+- Query: Provides a UI to view traces.
+- Storage: Stores traces for later retrieval (often a database like *Elasticsearch*).
