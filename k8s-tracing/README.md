@@ -18,8 +18,8 @@
 - 🔗 **Context Propagation**: For Jaeger to trace requests across services, it needs to propagate context. This means each service in the call chain passes along the trace information to the next service.
 
 ## Components of Jaeger
-- Jaeger consists of several components:
-- Agent: Collects traces from your application.
-- Collector: Receives traces from the agent and processes them.
-- Query: Provides a UI to view traces.
-- Storage: Stores traces for later retrieval (often a database like *Elasticsearch*).
+- **Jaeger consists of several components:**
+- **Agent**: Collects traces from your application.
+- **Collector**: Receives traces from the agent and processes them.
+- **Query**: Provides a UI to view traces.
+- **Storage**: Stores traces for later retrieval (often a database like *Elasticsearch*).
