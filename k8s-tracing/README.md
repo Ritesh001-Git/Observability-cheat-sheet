@@ -50,3 +50,32 @@ Tracing helps identify:
 - **Collector**: Receives traces from the agent and processes them.
 - **Query**: Provides a UI to view traces.
 - **Storage**: Stores traces for later retrieval (often a database like *Elasticsearch*).
+
+## What is OpenTelemetry
+OpenTelemetry in Jaeger refers to the standard framework used to generate, collect, and transport trace data from applications so it can be ingested, stored, and visualized by Jaeger.
+
+### 🏗️ Core Architecture Components
+
+OpenTelemetry splits its architecture into independent layers to stay flexible, modular, and extensible:
+
+| Component | What It Is & What It Does |
+| :--- | :--- |
+| **API** | Defines the data types and programming syntax used to instrument code. Each language has its own API layer, which acts as the entry point for generating data. |
+| **SDK** | The bridge that implements the API definitions for a specific language (Java, Python, Go, etc.). It manages data processing, batching, and sampling behind the scenes. |
+| **Collector** | A standalone proxy service that acts as a central pipeline. It receives telemetry data from applications, filters or cleans it, and exports it to your chosen monitoring backend. |
+| **OTLP** | **OpenTelemetry Protocol**, the default wire format used to transmit data efficiently between the application SDK, the Collector, and final backends via gRPC or HTTP. |
+
+### 🔀 System Integration Overview
+
+* **OpenTelemetry (The Instrumentation Layer):** Provides vendor-neutral APIs, SDKs, and the OpenTelemetry Protocol (OTLP) to generate and export traces directly from your application code without locking you into a specific vendor.
+* **Jaeger (The Backend and Visualization Layer):** Acts as the receiver, storage engine, and Web UI for those traces, letting you inspect request flows, debug bottlenecks, and analyze latency across microservices.
+
+### How They Work Together
+Modern versions of Jaeger natively support OpenTelemetry data via OTLP (OpenTelemetry Protocol).
+
+| Feature | OpenTelemetry | Jaeger |
+| :--- | :--- | :--- |
+| **Primary Role** | Generation, collection, and export | Storage, querying, and visualization |
+| **Data Signals** | Traces, metrics, logs, and profiling | Traces exclusively |
+| **User Interface** | None (relies on backends) | Includes a rich Web UI |
+| **Vendor Agnostic** | Yes (exports to many tools) | Yes (open-source backend) |
