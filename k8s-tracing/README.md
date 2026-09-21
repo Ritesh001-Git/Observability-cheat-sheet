@@ -1,4 +1,4 @@
-# Distributed Tracing with Jaeger, FastAPI & Kind
+# Distributed Tracing with Jaeger
 
 ## 1. What is Distributed Tracing?
 
