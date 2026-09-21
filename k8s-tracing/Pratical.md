@@ -66,9 +66,12 @@ For this project, FastAPI sends traces to Jaeger using OTLP gRPC on port `4317`.
 - OpenTelemetry
 - Jaeger
 
-No AWS/EKS is required. Everything runs locally using Kind.
-
 ---
+
+## Architecture
+
+<img width="1536" height="1024" alt="ChatGPT Image Sep 21, 2026, 02_33_56 PM" src="https://github.com/user-attachments/assets/a31adccd-3dc0-4a01-befd-5ca0e9102f05" />
+
 
 ## 4. Create the Kind Cluster
 
