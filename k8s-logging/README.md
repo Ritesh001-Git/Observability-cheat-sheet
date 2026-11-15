@@ -15,6 +15,7 @@
 - 📊 Promtail + Loki + Grafana
 
 ## 📦 EFK Stack (Elasticsearch, Fluentbit, Kibana)
+
 - EFK is a popular logging stack used to collect, store, and analyze logs in Kubernetes.
 - **Elasticsearch**: Stores and indexes log data for easy retrieval.
 - **Fluentbit**: A lightweight log forwarder that collects logs from different sources and sends them to Elasticsearch.
@@ -22,6 +23,14 @@
 
 # 🏠 Architecture
 <img width="1000" height="800" alt="architecture" src="https://github.com/user-attachments/assets/f4d16c1e-3009-46b7-9ea8-3adb6140d2f2" />
+
+## ELK Stack (Elasticsearch, Logstash, Kibana) 
+- ELK is a popular centralized logging stack used to collect, parse, store, and analyze logs across servers, applications, and cloud environments.
+- Elasticsearch. A distributed search and analytics engine that stores and indexes log data as JSON documents for fast retrieval and querying.
+- Logstash. A server-side data processing pipeline that collects logs from multiple sources, parses and transforms them, and sends them to Elasticsearch.
+- Kibana. A web-based visualization tool that lets users search, filter, and build dashboards to analyze logs stored in Elasticsearch.
+
+(Note: Modern ELK deployments often include Beats—such as Filebeat—as lightweight edge shippers to forward logs to Logstash or directly to Elasticsearch, making ELK closer in footprint to EFK.)
 
 ## ELK vs EFK Stack
 
